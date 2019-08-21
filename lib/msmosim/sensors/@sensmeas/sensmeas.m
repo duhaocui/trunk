@@ -44,12 +44,36 @@ classdef sensmeas
             
         end
         function a = getcat( these )
-            namelist = these(1).fieldnames;
-            a = [];
+            namelist = fieldnames( these(1) );
+            
+            indx = zeros(9,1);
             for i=1:length( namelist )
-                
-                a  = [a; cell2mat(eval(['{these.',namelist{i},'}']) )];            
-                
+                if strcmp( namelist{i}, 'range' )
+                    indx(1) = i;
+                elseif strcmp( namelist{i}, 'bearing' )
+                    indx(2) = i;
+                elseif strcmp( namelist{i}, 'rangext' )
+                    indx(3) = i;
+                elseif strcmp( namelist{i}, 'bearingext' )
+                    indx(4) = i;
+                elseif strcmp( namelist{i}, 'bearingmeas' )
+                    indx(5) = i;
+                elseif strcmp( namelist{i}, 'linmeas' )
+                    indx(6) = i;
+                elseif strcmp( namelist{i}, 'mlinmeas' )
+                    indx(7) = i;
+                elseif strcmp( namelist{i}, 'pixmeas' )
+                    indx(8) = i;
+                elseif strcmp( namelist{i}, 'rssmeas' )
+                    indx(9) = i;
+                end
+            end
+     
+            a = [];
+            for i=1:length( indx )
+                if indx( i )~= 0
+                    a  = [a; cell2mat(eval(['{these.',namelist{indx(i)},'}']) )];            
+                end
             end
             
         end
