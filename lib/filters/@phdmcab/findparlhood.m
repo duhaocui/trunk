@@ -1,6 +1,10 @@
 function varargout = findparlhood( this, sensors )
 
-P_D = sensors(1).pd;
+if isa( sensors(1), 'rbsensor3' )
+    P_D =   sensors.pdprofile.getpdprofile(0);
+else
+    P_D = sensors(1).pd;
+end
 
 this.parlhood = exp( - P_D*this.mupred )*prod(this.proddenum);
 
